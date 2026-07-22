@@ -7,6 +7,7 @@ import com.sporty.jackpot.messaging.BetMessage;
 import com.sporty.jackpot.messaging.BetPublisher;
 import com.sporty.jackpot.service.RewardEvaluationService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -49,7 +50,9 @@ public class BetController {
             @ApiResponse(responseCode = "404", description = "Bet unknown or not yet processed")
     })
     @PostMapping("/{betId}/reward-evaluation")
-    public RewardEvaluationResponse evaluateReward(@PathVariable String betId) {
+    public RewardEvaluationResponse evaluateReward(
+            @Parameter(example = "bet-1", description = "Must be a bet that has already been published and contributed")
+            @PathVariable String betId) {
         return RewardEvaluationResponse.from(rewardEvaluationService.evaluate(betId));
     }
 
