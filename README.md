@@ -6,13 +6,18 @@ Backend service that receives bets, contributes them to jackpot pools and evalua
 
 ## How to run
 
+Uses the bundled Maven Wrapper (`./mvnw`, or `mvnw.cmd` on Windows), so no local Maven install is
+required — it downloads a pinned, known-good Maven version on first run. Replace `./mvnw` with
+`mvnw.cmd` in the commands below if you're on Windows. On PowerShell, quote `-D` arguments as shown
+below — unquoted, PowerShell can mis-parse them before they ever reach Maven.
+
 ### Option A — with Kafka (default profile)
 
 Requires Docker.
 
 ```bash
 docker compose up -d          # starts a single-node Kafka on localhost:9092
-mvn spring-boot:run
+./mvnw spring-boot:run
 ```
 
 ### Option B — without Kafka (mock profile)
@@ -21,7 +26,7 @@ As allowed by the assignment, the Kafka producer is mocked: it logs the payload 
 directly to the processing service (simulating an immediate consume). No broker needed.
 
 ```bash
-mvn spring-boot:run -Dspring-boot.run.profiles=mock
+./mvnw spring-boot:run "-Dspring-boot.run.profiles=mock"
 ```
 
 The app starts on `http://localhost:8080`.
@@ -32,7 +37,7 @@ The app starts on `http://localhost:8080`.
 ### Tests
 
 ```bash
-mvn test
+./mvnw test
 ```
 
 Includes unit tests for the contribution/reward strategies and services, an end-to-end
