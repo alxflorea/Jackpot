@@ -20,3 +20,30 @@ spring:
 
   liquibase:
     change-log: classpath:liquibase/changelog-master.xml
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: jackpot-service
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      # Delegates to JsonDeserializer but never throws out of the deserializer itself;
+      # a bad record surfaces as an exception to the container's error handler instead
+      # of crashing the poll loop.
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+    properties:
+      spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
+      # The topic's contract is BetMessage regardless of what the producer is (an
+      # external betting engine won't set Spring's __TypeId__ header), so ignore
+      # type headers and always deserialize to the one type this topic carries.
+      spring.json.use.type.headers: false
+      spring.json.value.default.type: com.sporty.jackpot.messaging.BetMessage
+      spring.json.trusted.packages: com.sporty.jackpot.messaging
+      spring.json.add.type.headers: false
+
+app:
+  kafka:
+    topic: jackpot-bets
