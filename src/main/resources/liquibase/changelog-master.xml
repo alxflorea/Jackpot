@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <include file="liquibase/tables/001-jackpot-contribution-config.sql" relativeToChangelogFile="false"/>
+    <include file="liquibase/tables/002-jackpot-reward-config.sql" relativeToChangelogFile="false"/>
+    <include file="liquibase/tables/003-jackpot.sql" relativeToChangelogFile="false"/>
+    <include file="liquibase/tables/004-bet.sql" relativeToChangelogFile="false"/>
+    <include file="liquibase/tables/005-jackpot-contribution.sql" relativeToChangelogFile="false"/>
+    <include file="liquibase/tables/006-jackpot-reward.sql" relativeToChangelogFile="false"/>
+
+    <include file="liquibase/init/001-seed-jackpots.sql" relativeToChangelogFile="false"/>
+
+</databaseChangeLog>
